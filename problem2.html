@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Problem 2</title>
+<script>
+
+    let number_round = 0;
+    let output_array = [];
+    console.log("start input:")
+    function send_input(input_value){
+        if(input_value == 0) {
+            stop_input();
+            return;
+        }
+
+        document.getElementById('input_tag_id').value="";
+
+        //check prime float
+        console.log("input : "+input_value);
+        if(check_prime_float(input_value)) {
+            output_array.push(true);
+            console.log("output : "+true);
+        }else{ 
+            output_array.push(false); 
+            console.log("output : "+false);
+        }
+
+        output_shout();
+    }
+
+    function check_prime_float(input_value){
+        for(let i=0;i<input_value.length-1;i++){
+            if(check_prime_normal(Math.floor(input_value*Math.pow(10,i)))) return true;
+        }
+        return false;
+    }
+
+    function check_prime_normal(input_value){
+        if(input_value<=1) return false;
+        for(let i=2;i<input_value;i++){
+            if(input_value%i===0) return false;
+        }
+        return true;
+    }
+
+    function stop_input(){
+        console.log("stop!!");
+        document.getElementById('input_tag_id').disabled="true";
+        document.getElementById('submit').disabled="true";
+    }
+
+    function output_shout(){
+        let output_value="";
+        output_array.map((current_value) => output_value+="<li>"+current_value+"</li>");
+        document.getElementById('output').innerHTML = "<ul>"+output_value+"</ul>";
+    }
+
+</script>
+</head>
+<body>
+    กรอก input : <br/>
+    <input type="text" id="input_tag_id" name="input_field" />
+    <input id="submit"  type="submit" value="Send" onclick="send_input(input_tag_id.value)" />
+
+    <br/>
+    <!-- Output -->
+    <div id="output"></div>
+</body>
+</html>

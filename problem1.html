@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Problem 1</title>
+
+<script>
+
+    let number_round = 0;
+    let set_acronym = [];
+    let count_round = 0;
+    function send_input(input_value){
+        document.getElementById('input_tag_id').value="";
+        if(number_round===0){
+            if(!isNaN(input_value)) {
+                number_round=input_value;
+                console.log("Start Input");
+            }
+        }else{
+            let acronym="";
+            for(let j=0;j<input_value.length;j++){
+                let char_input_value = input_value[j].charCodeAt(0);
+                if(char_input_value>=65 && char_input_value<=90) {
+                    acronym+=input_value[j];
+                }
+            }
+            if(acronym!=="") set_acronym.push(acronym);
+            console.log(acronym);
+            if(++count_round == number_round) output_shout();
+        }
+    }
+
+    function swap_array(array_set,index1,index2){
+        temp=array_set[index1];
+        array_set[index1]=array_set[index2];
+        array_set[index2]=temp;
+    }
+
+    // sort length Array
+    function sort_array(array_set){
+        for(let i=0;i<array_set.length;i++){
+            let max_length=array_set[i].length;
+            let index_max_length=i;
+            for(let j=i;j<array_set.length;j++){
+                if(array_set[j].length>max_length) {
+                    max_length=array_set[j].length;
+                    index_max_length=j;
+                }
+            }
+            if(index_max_length!==i) swap_array(array_set,i,index_max_length);
+        }
+    }
+
+    function output_shout(){
+        // sort Alphabetical Order
+        set_acronym.sort();
+        // sort length Array
+        sort_array(set_acronym);
+        document.getElementById('input_tag_id').disabled="true";
+        document.getElementById('submit').disabled="true";
+        console.log(set_acronym);
+        let output_value="";
+        set_acronym.map((current_value) => output_value+="<li>"+current_value+"</li>");
+        document.getElementById('output').innerHTML = "<ul>"+output_value+"</ul>";
+    }
+
+</script>
+</head>
+<body>
+    กรอก input : <br/>
+    <input type="text" id="input_tag_id" name="input_field" />
+    <input id="submit" type="submit" value="Send" onclick="send_input(input_tag_id.value)" />
+
+    <br/>
+    <!-- Output -->
+    <div id="output"></div>
+
+</body>
+</html>

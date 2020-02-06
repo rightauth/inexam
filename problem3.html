@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Problem 3</title>
+    <script>
+
+    let number_round = 5,count_round=0;
+    var set_target = 0,set_output=[],fail_input=[],success_output=[];
+
+    function send_input(input_value){
+        document.getElementById('input_tag_id').value="";
+        if(set_target==0){
+            set_target = input_value.split(" ");
+            for(let i=0;i<set_target.length;i++) set_output.push(0);
+            //output
+            console.log("_ ".repeat(set_target.length));
+            success_output.push("_ ".repeat(set_target.length));
+            output_shout();
+        }else{
+            let check=true;
+            for(let i=0;i<set_target.length;i++){
+                if(input_value==set_target[i]) {
+                    set_output[i]=1;
+                    check=false;
+                }
+            }
+            if(check) fail_input.push(input_value);
+            add_success_output()
+            if(++count_round >= number_round) input_stop();
+            output_shout();
+        }
+    }
+
+    function input_stop(){
+        document.getElementById('input_tag_id').disabled="true";
+        document.getElementById('submit').disabled="true";
+        let count=0;
+        for(let i=0;i<set_output.length;i++) 
+            if(set_output[i]==1) count++;
+        success_output.push(count);
+        console.log(count);
+    }
+
+    function add_success_output(){
+        let output_value="";
+        for(let i=0;i<set_output.length;i++){
+            if(set_output[i]==1) output_value+=set_target[i]+" ";
+            else output_value+="_ ";
+        }
+        for(let i=0;i<fail_input.length;i++) output_value+=fail_input[i]+" ";
+        console.log(output_value);
+        success_output.push(output_value); 
+    }
+
+    function output_shout(){
+        let output_value="";
+        success_output.map((current_value) => output_value+=("<li>"+current_value+"</li>"));
+        document.getElementById('output').innerHTML = "<ul>"+output_value+"</ul>";
+    }
+    
+    </script>
+</head>
+<body>
+    กรอก input : <br/>
+    <input type="text" id="input_tag_id" name="input_field" />
+    <input id="submit" type="submit" value="Send" onclick="send_input(input_tag_id.value)" />
+
+    <br/>
+    <!-- Output -->
+    <div id="output"></div>
+</body>
+</html>
